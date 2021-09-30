@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet/css" href="./assets/css/style.css">
-
-  <title>Document</title>
+  <title>Dollar Flights</title>
 </head>
 
 <body>
@@ -21,36 +21,54 @@
 
   <div class="row">
 
-    <div class="col s3">
-      <!-- Grey navigation panel -->
+    <div class="col s3 light-blue lighten-5">
+      <!-- Left Container for user input (form) -->
       <div class="row">
-        <div class="input-field col s6">
-          <input value="New York" id="origin-city" type="text" class="validate">
-          <label class="active" for="origin-city">From</label>
-        </div>
-        <div class="input-field col s6">
-          <input value="Philadelphia" id="destination-city" type="text" class="validate">
-          <label class="active" for="destination-city">To</label>
-        </div>
-        <div class="input-field col s12">
-          <input value="9/29/2021" id="dates" type="text" class="validate">
-          <label class="active" for="dates">Date</label>
-        </div>
-        <div class="input-field col s12">
-          <select>
-            <option value="" selected>Choose your option</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-          <label>Passengers</label>
-        </div>
+        <form id="searchFlights">
+          <div class="input-field col s6">
+            <input value="New York" id="origin-city" type="text" class="validate">
+            <label class="active" for="origin-city">From</label>
+          </div>
+          <div class="input-field col s6">
+            <input value="Philadelphia" id="destination-city" type="text" class="validate">
+            <label class="active" for="destination-city">To</label>
+          </div>
+          <div class="input-field col s12">
+            <input value="9/29/2021" id="dates" type="text" class="validate">
+            <label class="active" for="dates">Date</label>
+          </div>
+          <div class="input-field col s12">
+            <select id="num-passengers">
+              <option value="" selected>Choose your option</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <label>Passengers</label>
+          </div>
+          <button class="btn waves-effect waves-light light-blue accent-4" form="searchFlights" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+        </form>
       </div>
     </div>
 
+    <!-- Right container to display flights and currency exchange  -->
     <div class="col s9">
-      <!-- Teal page content  -->
+      <div class="flights col s12">
+        <div class="flight col s12" id="flight1">
+        </div>
+        <div class="flight col s12" id="flight2">
+        </div>
+        <div class="flight col s12" id="flight3">
+        </div>
+      </div>
+      <div class="flight col s12" id="flight1">
+      </div>
+
+      <div class="exchange-rate col s12">
+      </div>
     </div>
 
   </div>
