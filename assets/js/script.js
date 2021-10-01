@@ -13,3 +13,21 @@ var getFlights = function (event) {
 }
 
 formEl.addEventListener("submit", getFlights);
+
+var Amadeus = require('amadeus');
+
+var amadeus = new Amadeus({
+  clientId: 'eelLngUiI8tMLybF8tU866k2elgx1TMC',
+  clientSecret: 'tnQE2DyNGwHltXmo'
+});
+
+amadeus.shopping.flightOffersSearch.get({
+    originLocationCode: 'SYD',
+    destinationLocationCode: 'BKK',
+    departureDate: '2021-08-01',
+    adults: '2'
+}).then(function(response){
+  console.log(response.data);
+}).catch(function(responseError){
+  console.log(responseError.code);
+});
