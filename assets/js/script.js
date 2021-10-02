@@ -1,33 +1,71 @@
-var formEl = document.querySelector("#searchFlights");
+var formCodesEl = document.querySelector("#searchCodes");
+var formFlightsEl = document.querySelector("#searchFlights");
 
-var getFlights = function (event) {
-    event.preventDefault();
-    var startCityInput = document.querySelector("#origin-city").value;
-    var endCityInput = document.querySelector("#destination-city").value;
-    var dateInput = document.querySelector("#dates").value;
-    var passNumInput = document.querySelector("#num-passengers").value;
-    console.log(startCityInput);
-    console.log(endCityInput);
-    console.log(dateInput);
-    console.log(passNumInput);
+var getCodes = function (event) {
+  event.preventDefault();
+  var cityInput = document.querySelector("#city-to-translate").value;
+  console.log(cityInput);
+  fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?query=" + cityInput, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+      "x-rapidapi-key": "22e4217b56msha848310ddf5ef00p15961cjsn99320da72316"
+    }
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .then(response => {
+      console.log(response);
+    });
+
 }
 
-formEl.addEventListener("submit", getFlights);
+var getFlights = function (event) {
+  event.preventDefault();
+  var startCityInput = document.querySelector("#origin-city").value;
+  var endCityInput = document.querySelector("#destination-city").value;
+  var dateInput = document.querySelector("#dates").value;
+  var passNumInput = document.querySelector("#num-passengers").value;
+  console.log(startCityInput);
+  console.log(endCityInput);
+  console.log(dateInput);
+  console.log(passNumInput);
 
-var Amadeus = require('amadeus');
+  fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/BKK-sky/JFK-sky/2021-10-15?inboundpartialdate=2021-10-30", {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+      "x-rapidapi-key": "22e4217b56msha848310ddf5ef00p15961cjsn99320da72316"
+    }
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .then(response => {
+      console.log(response);
+    });
 
-var amadeus = new Amadeus({
-  clientId: 'eelLngUiI8tMLybF8tU866k2elgx1TMC',
-  clientSecret: 'tnQE2DyNGwHltXmo'
-});
+  // fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/SFO/JFK/2021-10-10?inboundpartialdate=2021-10-25", {
+  //   "method": "GET",
+  //   "headers": {
+  //     "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+  //     "x-rapidapi-key": "dfc29d63b5msh5885edecbba1a13p1f59b8jsn9bc3d9c5df85"
+  //   }
+  // })
+  //   .then(response => {
+  //     console.log(response);
+  //   })
+  //   .catch(err => {
+  //     console.error(err);
+  //   });
+}
 
-amadeus.shopping.flightOffersSearch.get({
-    originLocationCode: 'SYD',
-    destinationLocationCode: 'BKK',
-    departureDate: '2021-08-01',
-    adults: '2'
-}).then(function(response){
-  console.log(response.data);
-}).catch(function(responseError){
-  console.log(responseError.code);
-});
+formCodesEl.addEventListener("submit", getCodes);
+formFlightsEl.addEventListener("submit", getFlights);

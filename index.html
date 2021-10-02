@@ -24,17 +24,28 @@
     <div class="col s3 light-blue lighten-5">
       <!-- Left Container for user input (form) -->
       <div class="row">
+        <form id="searchCodes">
+          <div class="input-field col s12">
+            <p>Search for Airport Codes:</p>
+            <div class="input-field col s12">
+              <input placeholder="New York" id="city-to-translate" type="text" class="validate">
+              <label class="active" for="city-to-translate">City</label>
+            </div>
+            <button class="btn waves-effect waves-light light-blue accent-4" form="searchCodes" type="submit"
+            name="action">Submit
+          </div>
+        </form>
         <form id="searchFlights">
           <div class="input-field col s6">
-            <input value="New York" id="origin-city" type="text" class="validate">
+            <input placeholder="New York" id="origin-city" type="text" class="validate">
             <label class="active" for="origin-city">From</label>
           </div>
           <div class="input-field col s6">
-            <input value="Philadelphia" id="destination-city" type="text" class="validate">
+            <input placeholder="Philadelphia" id="destination-city" type="text" class="validate">
             <label class="active" for="destination-city">To</label>
           </div>
           <div class="input-field col s12">
-            <input value="9/29/2021" id="dates" type="text" class="validate">
+            <input placeholder="2021-10-30" id="dates" type="text" class="validate">
             <label class="active" for="dates">Date</label>
           </div>
           <div class="input-field col s12">
@@ -47,7 +58,8 @@
             </select>
             <label>Passengers</label>
           </div>
-          <button class="btn waves-effect waves-light light-blue accent-4" form="searchFlights" type="submit" name="action">Submit
+          <button class="btn waves-effect waves-light light-blue accent-4" form="searchFlights" type="submit"
+            name="action">Submit
             <i class="material-icons right">send</i>
           </button>
         </form>
