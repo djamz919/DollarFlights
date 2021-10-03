@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet/css" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <title>Dollar Flights</title>
 </head>
 
@@ -23,16 +23,16 @@
     <div class="row" id="search-codes-container">
       <div class="col s3 light-blue lighten-5">
         <form id="searchCodes">
-        <div class="input-field col s12">
-          <p>Search for Airport Codes:</p>
-          <div class="input-field col s12">
-            <input placeholder="New York" id="city-to-translate" type="text" class="validate">
-            <label class="active" for="city-to-translate">City</label>
+          <div class="col s12">
+            <h2>Search for Airport Codes:</h2>
+            <div class="input-field">
+              <input placeholder="Enter a City" id="city-to-translate" type="text" class="validate">
+            </div>
+            <button class="btn waves-effect waves-light light-blue accent-4" form="searchCodes" type="submit"
+              name="action">Submit<i class="material-icons right">send</i>
           </div>
-          <button class="btn waves-effect waves-light light-blue accent-4" form="searchCodes" type="submit"
-          name="action">Submit
-        </div>
-      </form></div>
+        </form>
+      </div>
       <div class="col s9" id="display-codes-container"></div>
     </div>
     <div class="row" id="search-flights-container">
@@ -40,38 +40,43 @@
         <!-- Left Container for user input (form) -->
         <div class="row">
           <form id="searchFlights">
-            <div class="input-field col s6">
-              <input placeholder="New York" id="origin-city" type="text" class="validate">
-              <label class="active" for="origin-city">From</label>
+            <div class="col s12">
+              <div class="col s12">
+                <h2>Search for Quotes:</h2>
+                <div class="input-field col s6">
+                  <input placeholder="Enter an Airport Code" id="origin-city" type="text" class="validate">
+                  <label class="active" for="origin-city">From</label>
+                </div>
+                <div class="input-field col s6">
+                  <input placeholder="Enter an Airport Code" id="destination-city" type="text" class="validate">
+                  <label class="active" for="destination-city">To</label>
+                </div>
+                <div class="input-field col s12">
+                  <input placeholder="2021-10-30" id="dates" type="date" class="validate datepicker">
+                  <label class="active" for="dates">Date</label>
+                </div>
+                <!-- <div class="input-field col s12">
+                  <select id="num-passengers">
+                    <option value="" selected>Choose your option</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                  <label>Passengers</label>
+                </div> -->
+                <button class="btn waves-effect waves-light light-blue accent-4" form="searchFlights" type="submit"
+                  name="action">Submit
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
             </div>
-            <div class="input-field col s6">
-              <input placeholder="Philadelphia" id="destination-city" type="text" class="validate">
-              <label class="active" for="destination-city">To</label>
-            </div>
-            <div class="input-field col s12">
-              <input placeholder="2021-10-30" id="dates" type="date" class="validate datepicker">
-              <label class="active" for="dates">Date</label>
-            </div>
-            <div class="input-field col s12">
-              <select id="num-passengers">
-                <option value="" selected>Choose your option</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-              <label>Passengers</label>
-            </div>
-            <button class="btn waves-effect waves-light light-blue accent-4" form="searchFlights" type="submit"
-              name="action">Submit
-              <i class="material-icons right">send</i>
-            </button>
           </form>
         </div>
       </div>
-  
+
       <!-- Right container to display flights and currency exchange  -->
-      <div class="col s9">
+      <div class="col s9" id="display-flights-container">
         <div class="flights col s12">
           <div class="flight col s12" id="flight1">
           </div>
@@ -80,16 +85,14 @@
           <div class="flight col s12" id="flight3">
           </div>
         </div>
-        <div class="flight col s12" id="flight1">
-        </div>
-  
+
         <div class="exchange-rate col s12">
         </div>
       </div>
-  
+
     </div>
-    </div>
-    
+  </div>
+
 
   <footer class="page-footer light-blue accent-2">
     <div class="container">
@@ -110,16 +113,6 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
   </script>
-  <script>
-    $(document).ready(function () {
-      $('select').material_select();
-    });
-
-  //   $(document).ready(function(){
-  //   $('.datepicker').datepicker();
-  // });
-  </script>
-
   <script src="./assets/js/script.js"></script>
 
 </body>
