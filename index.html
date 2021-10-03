@@ -45,7 +45,7 @@
             <label class="active" for="destination-city">To</label>
           </div>
           <div class="input-field col s12">
-            <input placeholder="2021-10-30" id="dates" type="text" class="validate">
+            <input placeholder="2021-10-30" id="dates" type="date" class="validate datepicker">
             <label class="active" for="dates">Date</label>
           </div>
           <div class="input-field col s12">
@@ -108,7 +108,12 @@
     $(document).ready(function () {
       $('select').material_select();
     });
+
+  //   $(document).ready(function(){
+  //   $('.datepicker').datepicker();
+  // });
   </script>
+
   <script src="./assets/js/script.js"></script>
 
 </body>
