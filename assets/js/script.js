@@ -1,6 +1,18 @@
 var formCodesEl = document.querySelector("#searchCodes");
 var formFlightsEl = document.querySelector("#searchFlights");
 
+var displayCodes = function (response) {
+  var codescontainerEl = document.getElementById("display-codes-container");
+  for (var i =0; i < response.Places.length; i++) {
+    console.log(response.Places[i]);
+    var codeArr = response.Places[i].PlaceId.split("-");
+    //console.log(codeArr);
+    var airportCodes = document.createElement("p");
+    airportCodes.textContent = codeArr[0] + ": " + response.Places[i].PlaceName;
+    codescontainerEl.appendChild(airportCodes);
+  }
+}
+
 var getCodes = function (event) {
   event.preventDefault();
   var cityInput = document.querySelector("#city-to-translate").value;
@@ -20,6 +32,7 @@ var getCodes = function (event) {
     })
     .then(response => {
       console.log(response);
+      displayCodes(response);
     });
 
 }
