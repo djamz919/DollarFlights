@@ -144,5 +144,24 @@ var getFlights = function (event) {
   //   });
 }
 
+var getExchangeRate = function (event) {
+  event.preventDefault();
+  var rateInput = document.querySelector("#oamount").value;
+  console.log(rateInput);
+fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from=USD&to=ILS&amount=12", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
+		"x-rapidapi-key": "957447a831mshed8a5216f1c641fp19235djsnb370d1085dc7"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.error(err);
+});
+}
+
 formCodesEl.addEventListener("submit", getCodes);
 formFlightsEl.addEventListener("submit", getFlights);
