@@ -144,5 +144,11 @@ var getFlights = function (event) {
   //   });
 }
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems, options);
+});
+
 formCodesEl.addEventListener("submit", getCodes);
 formFlightsEl.addEventListener("submit", getFlights);
