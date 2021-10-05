@@ -1,5 +1,9 @@
 var formCodesEl = document.querySelector("#searchCodes");
 var formFlightsEl = document.querySelector("#searchFlights");
+var originCountry = "";
+var desitnationCountry = "";
+var originCurrency = "";
+var destinationCurrency = "";
 
 var displayCodes = function (response) {
   var codesDivEl = document.getElementById("display-codes-container");
@@ -10,7 +14,7 @@ var displayCodes = function (response) {
   codesHeader.textContent = 'Airport Codes for ' + document.querySelector("#city-to-translate").value;
   codescontainerEl.appendChild(codesHeader);
   for (var i = 0; i < response.Places.length; i++) {
-    console.log(response.Places[i]);
+    // console.log(response.Places[i]);
     var codeArr = response.Places[i].PlaceId.split("-");
     //console.log(codeArr);
     var airportCodes = document.createElement("p");
@@ -23,7 +27,7 @@ var displayCodes = function (response) {
 var getCodes = function (event) {
   event.preventDefault();
   var cityInput = document.querySelector("#city-to-translate").value;
-  console.log(cityInput);
+  // console.log(cityInput);
   fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?query=" + cityInput, {
     "method": "GET",
     "headers": {
@@ -38,7 +42,7 @@ var getCodes = function (event) {
       console.error(err);
     })
     .then(response => {
-      console.log(response);
+      // console.log(response);
       displayCodes(response);
     });
 }
@@ -73,7 +77,7 @@ var displayFlights = function (response) {
   // Origin Airport to Destination Airport; Airline and Flight ID; Time of Departure; Cost
   var displayFlightsContainerEl = document.getElementById("display-flights-container");
   displayFlightsContainerEl.innerHTML = "";
-  console.log(response.Quotes.length);
+  // console.log(response.Quotes.length);
   for (var i = 0; i < response.Quotes.length; i++) {
     var flightsCardEl = document.createElement('div');
     flightsCardEl.className = "col s12 light-blue accent-4";
@@ -101,15 +105,38 @@ var displayFlights = function (response) {
   }
 }
 
+var getCurrencies = function (originCountry, desitnationCountry) {
+  fetch("https://restcountries.com/v3.1/name/" + originCountry)
+  .then (response => {
+    return response.json();
+  })
+  .then (response => {
+    console.log(response);
+    var currencyObj = response[0].currencies;
+    originCurrency = Object.keys(currencyObj)[0];
+    console.log(originCurrency);
+    return fetch("https://restcountries.com/v3.1/name/" + desitnationCountry)
+  })
+  .then (response => {
+    return response.json();
+  })
+  .then (response => {
+    console.log(response);
+    var currencyObj = response[0].currencies;
+    destinationCurrency = Object.keys(currencyObj)[0];
+    console.log(destinationCurrency);
+  })
+}
+
 var getFlights = function (event) {
   event.preventDefault();
   var startCityInput = document.querySelector("#origin-city").value;
   var endCityInput = document.querySelector("#destination-city").value;
   var dateInput = document.querySelector("#dates").value;
   // var passNumInput = document.querySelector("#num-passengers").value;
-  console.log(startCityInput);
-  console.log(endCityInput);
-  console.log(dateInput);
+  // console.log(startCityInput);
+  // console.log(endCityInput);
+  // console.log(dateInput);
   // console.log(passNumInput);
   fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + startCityInput + "-sky/" + endCityInput + "-sky/" + dateInput, {
     "method": "GET",
@@ -127,6 +154,11 @@ var getFlights = function (event) {
     .then(response => {
       console.log(response);
       displayFlights(response);
+      originCountry = response.Places[0].CountryName;
+      desitnationCountry = response.Places[1].CountryName;
+      console.log(originCountry);
+      console.log(desitnationCountry);
+      getCurrencies(originCountry, desitnationCountry);
     });
 
   // fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/SFO/JFK/2021-10-10?inboundpartialdate=2021-10-25", {
@@ -147,7 +179,7 @@ var getFlights = function (event) {
 var getExchangeRate = function (event) {
   event.preventDefault();
   var rateInput = document.querySelector("#oamount").value;
-  console.log(rateInput);
+  // console.log(rateInput);
 fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from=USD&to=ILS&amount=12", {
 	"method": "GET",
 	"headers": {
