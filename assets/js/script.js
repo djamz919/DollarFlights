@@ -8,6 +8,7 @@ var destinationCountry = "";
 var originCurrency = "";
 var destinationCurrency = "";
 var exchangeRate = ""; //destinationCurrencyRate divided by originCurrencyRate
+var currencyValue = 1; //1 is default value
 
 var displayCodes = function (response) {
   var codesDivEl = document.getElementById("display-codes-container");
@@ -199,6 +200,16 @@ var getFlights = function (event) {
   //   });
 }
 
+var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate){
+  displayRateContEl = document.querySelector("#rate-exchange-display-container");
+  var ratesCardEl = document.createElement('div');
+  ratesCardEl.className = "col s12 light-blue accent-4";
+  var rateContent = document.createElement('p');
+  rateContent.textContent = currencyValue + " " + originCurrency + " = " + (currencyValue*exchangeRate).toFixed(2) + " " + destinationCurrency;
+  ratesCardEl.appendChild(rateContent);
+  displayRateContEl.appendChild(ratesCardEl);
+}
+
 var getExchangeRate = function (originCurrency, destinationCurrency) {
   fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json')
     .then(response => {
@@ -211,19 +222,20 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
       // console.log(response);
       startCurrency = originCurrency.toLowerCase();
       endCurrency = destinationCurrency.toLowerCase();
-      console.log(startCurrency);
-      console.log(endCurrency);
+      // console.log(startCurrency);
+      // console.log(endCurrency);
       // console.log(response.eur);
-      console.log(response.eur.usd);
+      // console.log(response.eur.usd);
       var eurObj = response.eur;
       // console.log(eurObj);
       // console.log(eurObj[startCurrency]);
       var originCurrencyRate = eurObj[startCurrency];
       var destinationCurrencyRate = eurObj[endCurrency];
       exchangeRate = destinationCurrencyRate/originCurrencyRate;
-      console.log(originCurrencyRate);
-      console.log(destinationCurrencyRate);
-      console.log(exchangeRate);
+      // console.log(originCurrencyRate);
+      // console.log(destinationCurrencyRate);
+      // console.log(exchangeRate);
+      displayExchangeRate(originCurrency, destinationCurrency, exchangeRate);
     });
   }
 
@@ -231,8 +243,11 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
     event.preventDefault();
     startCurrency = document.querySelector("#startMoney").value;
     endCurrency = document.querySelector("#endMoney").value;
-    console.log(startCurrency);
-    console.log(endCurrency);
+    if(document.querySelector("#oamount").value > 1){
+      currencyValue = document.querySelector("#oamount").value
+    }
+    // console.log(startCurrency);
+    // console.log(endCurrency);
     getExchangeRate(startCurrency, endCurrency);
   }
 
