@@ -20,10 +20,11 @@ The user must input there specific airport codes to search for fares. If the use
 
 * API's used
     
-    -https://rapidapi.com/skyscanner/api/skyscanner-flight-search
+    - Flights - https://rapidapi.com/skyscanner/api/skyscanner-flight-search
 
-    -(currency exchange api)
+    - Currency Exchange - https://restcountries.com/v3.1/name/
 
+    - Currency Exchange - https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json
 
 ## Application Screenshots:
 
