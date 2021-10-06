@@ -16,7 +16,7 @@ var displayCodes = function (response) {
   var codescontainerEl = document.createElement("div");
   codescontainerEl.className = "col s12 light-blue accent-4";
   var codesHeader = document.createElement('h3');
-  codesHeader.textContent = 'Airport Codes for ' + document.querySelector("#city-to-translate").value;
+  codesHeader.textContent = 'Results for "' + document.querySelector("#city-to-translate").value + '"';
   codescontainerEl.appendChild(codesHeader);
   for (var i = 0; i < response.Places.length; i++) {
     // console.log(response.Places[i]);
@@ -202,9 +202,10 @@ var getFlights = function (event) {
 
 var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate){
   displayRateContEl = document.querySelector("#rate-exchange-display-container");
+  displayRateContEl.innerHTML = "";
   var ratesCardEl = document.createElement('div');
   ratesCardEl.className = "col s12 light-blue accent-4";
-  var rateContent = document.createElement('p');
+  var rateContent = document.createElement('h3');
   rateContent.textContent = currencyValue + " " + originCurrency + " = " + (currencyValue*exchangeRate).toFixed(2) + " " + destinationCurrency;
   ratesCardEl.appendChild(rateContent);
   displayRateContEl.appendChild(ratesCardEl);

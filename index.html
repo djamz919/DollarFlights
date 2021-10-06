@@ -21,12 +21,13 @@
   <main>
     <div class="row" id="main-container">
       <div class="row" id="search-codes-container">
-        <div class="col s3 m4 l3 light-blue lighten-5">
+        <div class="col s3 m4 l3 light-blue lighten-5" id="codes-form">
           <form id="searchCodes">
             <div class="col s12">
               <h2>Search for Airport Codes:</h2>
               <div class="input-field">
-                <input placeholder="Enter a Country, State, or City" id="city-to-translate" type="text" class="validate">
+                <input placeholder="Enter a Country, State, or City" id="city-to-translate" type="text"
+                  class="validate">
               </div>
               <button class="btn waves-effect waves-light light-blue accent-4" form="searchCodes" type="submit"
                 name="action">Submit<i class="material-icons right">send</i>
@@ -36,7 +37,7 @@
         <div class="col s9 m8 l9 " id="display-codes-container"></div>
       </div>
       <div class="row" id="search-flights-container">
-        <div class="col s3 m4 l3 light-blue lighten-5">
+        <div class="col s3 m4 l3 light-blue lighten-5" id="quotes-form">
           <!-- Left Container for user input (form) -->
           <div class="row">
             <form id="searchFlights">
@@ -92,20 +93,17 @@
       <div class="row" id="rate-exchange-container">
 
         <div class="row" id="rate-exchange-form-container">
-          <div class="col s3 m4 l3 light-blue lighten-5">
+          <div class="col s3 m4 l3 light-blue lighten-5" id="rates-form">
             <form id="rateExchange">
               <div class="col s12">
-                  <h2>Amount to Convert :</h2>
+                <h2>Amount to Convert:</h2>
                 <input type="text" class="form-control searchBox" placeholder="0.00" id="oamount">
               </div>
               <div class="col s12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">From</span>
-                  </div>
-  
+                <div class="input-field mb-3">
+                  <label class="active" for="startMoney">From</label>
                   <select className="browser-default" id="startMoney">
-                    <option value="">Select One …</option>
+                    <option value="">Select a Currency</option>
                     <option value="USD">USD</option>
                     <option value="AED">AED</option>
                     <option value="ARS">ARS</option>
@@ -161,16 +159,13 @@
                   </select>
                 </div>
               </div>
-  
-  
+
+
               <div class="col s12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-  
-                    <span class="input-group-text">To</span>
-                  </div>
+                <div class="input-field mb-3">
+                  <label class="active" for="startMoney">From</label>
                   <select className="browser-default" id="endMoney">
-                    <option value="">Select One …</option>
+                    <option value="">Select a Currency</option>
                     <option value="USD">USD</option>
                     <option value="AED">AED</option>
                     <option value="ARS">ARS</option>
@@ -225,16 +220,11 @@
                     <option value="ZAR">ZAR</option>
                   </select>
                 </div>
+                
                 <div class="text-center">
-  
                   <!-- convert button -->
                   <button class="btn waves-effect waves-light light-blue accent-4" type="submit">
                     Convert
-                  </button>
-  
-                  <!-- reset button -->
-                  <button class="btn waves-effect waves-light light-blue accent-4" onclick="clearVal()">
-                    Reset
                   </button>
                 </div>
               </div>
@@ -260,7 +250,9 @@
         <div class="col 12">
           <h5 class="white-text">About Us</h5>
 
-          <p class="grey-text text-lighten-4">Dollar Flights is created by a team of highly enthusiastic people seeking to upskill in full stack development. This website is the product of their hard work and collaboration and is a display of the many technologies they have learned since starting Rutgers Coding Bootcamp.</p>
+          <p class="grey-text text-lighten-4">Dollar Flights is created by a team of highly enthusiastic people seeking
+            to upskill in full stack development. This website is the product of their hard work and collaboration and
+            is a display of the many technologies they have learned since starting Rutgers Coding Bootcamp.</p>
         </div>
       </div>
     </div>
@@ -271,13 +263,13 @@
     </div>
   </footer>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("select").material_select();
-      });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-    </script>
+  <script>
+    $(document).ready(function () {
+      $("select").formSelect();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+  </script>
   <script src="./assets/js/script.js"></script>
 
 </body>
