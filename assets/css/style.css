@@ -1,7 +1,46 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  margin: 0;
+}
+
+#codes-form, #quotes-form, #rates-form {
+  padding-bottom: 150px;
+  height: 100%;
+}
+
+#codes-form, #quotes-form {
+  border-bottom: solid black 1px;
+}
+
 h2 {
     font-size: 28px;
     font-weight: 500;
     /*margin-top: ; */
+}
+
+#display-codes-container div h3, #display-codes-container div p {
+  padding-left: 50px;
+}
+
+#display-codes-container, #display-flights-container, #rate-exchange-display-container {
+  padding: 0;
+}
+
+#display-codes-container div, #display-flights-container div, #rate-exchange-display-container div {
+  padding-bottom: 20px;
+}
+
+#display-flights-container div h3, #display-flights-container div p {
+  padding-left: 50px;
+}
+
+#rate-exchange-display-container div h3 {
+  text-align: center;
 }
 
 h3 {
