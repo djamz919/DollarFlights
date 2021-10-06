@@ -27,11 +27,13 @@ The user must input there specific airport codes to search for fares. If the use
 
 ## Application Screenshots:
 
-![ProjectOne]()
+![projectone](assets/images/DollarFlightsWebpage.png)
 
 ## Deployed Website
+https://djamz919.github.io/ProjectOne/
 
 ## GitHub Link
+https://github.com/djamz919/ProjectOne.git
 
 
 
