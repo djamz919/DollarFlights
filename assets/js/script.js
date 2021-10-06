@@ -1,5 +1,6 @@
 var formCodesEl = document.querySelector("#searchCodes");
 var formFlightsEl = document.querySelector("#searchFlights");
+var formExchangeEl = document.querySelector("#rateExchange");
 var originAirport = "";
 var destinationAirport = "";
 var originCountry = "";
@@ -226,6 +227,15 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
     });
   }
 
+  var startExchange = function (event) {
+    event.preventDefault();
+    startCurrency = document.querySelector("#startMoney").value;
+    endCurrency = document.querySelector("#endMoney").value;
+    console.log(startCurrency);
+    console.log(endCurrency);
+    getExchangeRate(startCurrency, endCurrency);
+  }
+
 // var getExchangeRate = function (event) {
 //   event.preventDefault();
 //   var rateInput = document.querySelector("#oamount").value;
@@ -247,3 +257,4 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
 
 formCodesEl.addEventListener("submit", getCodes);
 formFlightsEl.addEventListener("submit", getFlights);
+formExchangeEl.addEventListener("submit",startExchange);
