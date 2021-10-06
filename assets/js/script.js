@@ -1,5 +1,14 @@
 var formCodesEl = document.querySelector("#searchCodes");
 var formFlightsEl = document.querySelector("#searchFlights");
+var formExchangeEl = document.querySelector("#rateExchange");
+var originAirport = "";
+var destinationAirport = "";
+var originCountry = "";
+var destinationCountry = "";
+var originCurrency = "";
+var destinationCurrency = "";
+var exchangeRate = ""; //destinationCurrencyRate divided by originCurrencyRate
+var currencyValue = 1; //1 is default value
 
 var displayCodes = function (response) {
   var codesDivEl = document.getElementById("display-codes-container");
@@ -10,7 +19,7 @@ var displayCodes = function (response) {
   codesHeader.textContent = 'Airport Codes for ' + document.querySelector("#city-to-translate").value;
   codescontainerEl.appendChild(codesHeader);
   for (var i = 0; i < response.Places.length; i++) {
-    console.log(response.Places[i]);
+    // console.log(response.Places[i]);
     var codeArr = response.Places[i].PlaceId.split("-");
     //console.log(codeArr);
     var airportCodes = document.createElement("p");
@@ -23,7 +32,7 @@ var displayCodes = function (response) {
 var getCodes = function (event) {
   event.preventDefault();
   var cityInput = document.querySelector("#city-to-translate").value;
-  console.log(cityInput);
+  // console.log(cityInput);
   fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?query=" + cityInput, {
     "method": "GET",
     "headers": {
@@ -38,7 +47,7 @@ var getCodes = function (event) {
       console.error(err);
     })
     .then(response => {
-      console.log(response);
+      // console.log(response);
       displayCodes(response);
     });
 }
@@ -73,24 +82,24 @@ var displayFlights = function (response) {
   // Origin Airport to Destination Airport; Airline and Flight ID; Time of Departure; Cost
   var displayFlightsContainerEl = document.getElementById("display-flights-container");
   displayFlightsContainerEl.innerHTML = "";
-  console.log(response.Quotes.length);
+  // console.log(response.Quotes.length);
   for (var i = 0; i < response.Quotes.length; i++) {
     var flightsCardEl = document.createElement('div');
     flightsCardEl.className = "col s12 light-blue accent-4";
     flightsCardEl.id = "flights" + i;
     var flightHeaderEl = document.createElement('h3');
     var flightAirlineEl = document.createElement('p');
-    var flightDateEl = document.createElement('p');
+    // var flightDateEl = document.createElement('p');
     var flightCostEl = document.createElement('p');
     // console.log(response.Quotes[i].OutboundLeg.OriginId);
     // console.log(response.Places);
     flightHeaderEl.textContent = translatePlaceId(response.Quotes[i].OutboundLeg.OriginId, response.Places) + " to " + translatePlaceId(response.Quotes[i].OutboundLeg.DestinationId, response.Places)
     // console.log(flightHeaderEl.textContent);
-    flightHeaderEl.className = "col s8";
+    flightHeaderEl.className = "col s12";
     flightsCardEl.appendChild(flightHeaderEl);
-    flightDateEl.textContent = response.Quotes[i].OutboundLeg.DepartureDate;
-    flightDateEl.className = "col s4";
-    flightsCardEl.appendChild(flightDateEl);
+    // flightDateEl.textContent = response.Quotes[i].OutboundLeg.DepartureDate;
+    // flightDateEl.className = "col s4";
+    // flightsCardEl.appendChild(flightDateEl);
     flightAirlineEl.textContent = "Airline: " + translateCarrierId(response.Quotes[i].OutboundLeg.CarrierIds[0], response.Carriers);
     flightAirlineEl.className = "col s12";
     flightsCardEl.appendChild(flightAirlineEl);
@@ -101,17 +110,59 @@ var displayFlights = function (response) {
   }
 }
 
+var getCurrencies = function (originCountry, destinationCountry) {
+  fetch("https://restcountries.com/v3.1/name/" + originCountry)
+    .then(response => {
+      return response.json();
+    })
+    .then(response => {
+      // console.log(response);
+      var currencyObj = response[0].currencies;
+      originCurrency = Object.keys(currencyObj)[0]; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
+      console.log('The origin currency is ' + originCurrency);
+      return fetch("https://restcountries.com/v3.1/name/" + destinationCountry)
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(response => {
+      // console.log(response);
+      var currencyObj = response[0].currencies; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
+      destinationCurrency = Object.keys(currencyObj)[0];
+      console.log('The destination currency is ' + destinationCurrency);
+      getExchangeRate(originCurrency, destinationCurrency);
+    })
+}
+
+var getCountries = function (response) {
+  for (var i = 0; i < response.Places.length; i++) {
+    // console.log(response.Places[i].SkyscannerCode);
+    // console.log(originAirport);
+    // console.log(destinationCountry);
+    if (response.Places[i].SkyscannerCode == originAirport) {
+      originCountry = response.Places[i].CountryName;
+    } else if (response.Places[i].SkyscannerCode == destinationAirport) {
+      destinationCountry = response.Places[i].CountryName;
+    }
+  }
+  console.log('The origin country is ' + originCountry);
+  console.log('The destination country is ' + destinationCountry);
+  getCurrencies(originCountry, destinationCountry);
+}
+
 var getFlights = function (event) {
   event.preventDefault();
-  var startCityInput = document.querySelector("#origin-city").value;
-  var endCityInput = document.querySelector("#destination-city").value;
+  originAirport = document.querySelector("#origin-city").value;
+  originAirport = originAirport.toUpperCase();
+  destinationAirport = document.querySelector("#destination-city").value;
+  destinationAirport = destinationAirport.toUpperCase();
   var dateInput = document.querySelector("#dates").value;
   // var passNumInput = document.querySelector("#num-passengers").value;
-  console.log(startCityInput);
-  console.log(endCityInput);
-  console.log(dateInput);
+  // console.log(startCityInput);
+  // console.log(endCityInput);
+  // console.log(dateInput);
   // console.log(passNumInput);
-  fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + startCityInput + "-sky/" + endCityInput + "-sky/" + dateInput, {
+  fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + originAirport + "-sky/" + destinationAirport + "-sky/" + dateInput, {
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
@@ -124,9 +175,14 @@ var getFlights = function (event) {
     .catch(err => {
       console.error(err);
     })
-    .then(response => {
+    .then(response => { //PENDING LOGIC IF NO FLIGHTS ARE AVAILABLE
       console.log(response);
       displayFlights(response);
+      getCountries(response);
+      // originCountry = response.Places[0].CountryName;
+      // destinationCountry = response.Places[1].CountryName;
+      // console.log(originCountry);
+      // console.log(destinationCountry);
     });
 
   // fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/SFO/JFK/2021-10-10?inboundpartialdate=2021-10-25", {
@@ -144,24 +200,76 @@ var getFlights = function (event) {
   //   });
 }
 
-var getExchangeRate = function (event) {
-  event.preventDefault();
-  var rateInput = document.querySelector("#oamount").value;
-  console.log(rateInput);
-fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from=USD&to=ILS&amount=12", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
-		"x-rapidapi-key": "957447a831mshed8a5216f1c641fp19235djsnb370d1085dc7"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
+var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate){
+  displayRateContEl = document.querySelector("#rate-exchange-display-container");
+  var ratesCardEl = document.createElement('div');
+  ratesCardEl.className = "col s12 light-blue accent-4";
+  var rateContent = document.createElement('p');
+  rateContent.textContent = currencyValue + " " + originCurrency + " = " + (currencyValue*exchangeRate).toFixed(2) + " " + destinationCurrency;
+  ratesCardEl.appendChild(rateContent);
+  displayRateContEl.appendChild(ratesCardEl);
 }
+
+var getExchangeRate = function (originCurrency, destinationCurrency) {
+  fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json')
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .then(response => {
+      // console.log(response);
+      startCurrency = originCurrency.toLowerCase();
+      endCurrency = destinationCurrency.toLowerCase();
+      // console.log(startCurrency);
+      // console.log(endCurrency);
+      // console.log(response.eur);
+      // console.log(response.eur.usd);
+      var eurObj = response.eur;
+      // console.log(eurObj);
+      // console.log(eurObj[startCurrency]);
+      var originCurrencyRate = eurObj[startCurrency];
+      var destinationCurrencyRate = eurObj[endCurrency];
+      exchangeRate = destinationCurrencyRate/originCurrencyRate;
+      // console.log(originCurrencyRate);
+      // console.log(destinationCurrencyRate);
+      // console.log(exchangeRate);
+      displayExchangeRate(originCurrency, destinationCurrency, exchangeRate);
+    });
+  }
+
+  var startExchange = function (event) {
+    event.preventDefault();
+    startCurrency = document.querySelector("#startMoney").value;
+    endCurrency = document.querySelector("#endMoney").value;
+    if(document.querySelector("#oamount").value > 1){
+      currencyValue = document.querySelector("#oamount").value
+    }
+    // console.log(startCurrency);
+    // console.log(endCurrency);
+    getExchangeRate(startCurrency, endCurrency);
+  }
+
+// var getExchangeRate = function (event) {
+//   event.preventDefault();
+//   var rateInput = document.querySelector("#oamount").value;
+//   // console.log(rateInput);
+//   fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from=USD&to=ILS&amount=12", {
+//     "method": "GET",
+//     "headers": {
+//       "x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
+//       "x-rapidapi-key": "957447a831mshed8a5216f1c641fp19235djsnb370d1085dc7"
+//     }
+//   })
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//     });
+// }
 
 formCodesEl.addEventListener("submit", getCodes);
 formFlightsEl.addEventListener("submit", getFlights);
+formExchangeEl.addEventListener("submit",startExchange);
