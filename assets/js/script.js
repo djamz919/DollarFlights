@@ -89,17 +89,21 @@ var displayFlights = function (response) {
     flightsCardEl.id = "flights" + i;
     var flightHeaderEl = document.createElement('h3');
     var flightAirlineEl = document.createElement('p');
-    // var flightDateEl = document.createElement('p');
+    var flightDateEl = document.createElement('p');
     var flightCostEl = document.createElement('p');
     // console.log(response.Quotes[i].OutboundLeg.OriginId);
     // console.log(response.Places);
     flightHeaderEl.textContent = translatePlaceId(response.Quotes[i].OutboundLeg.OriginId, response.Places) + " to " + translatePlaceId(response.Quotes[i].OutboundLeg.DestinationId, response.Places)
     // console.log(flightHeaderEl.textContent);
-    flightHeaderEl.className = "col s12";
+    flightHeaderEl.className = "col s8";
     flightsCardEl.appendChild(flightHeaderEl);
-    // flightDateEl.textContent = response.Quotes[i].OutboundLeg.DepartureDate;
-    // flightDateEl.className = "col s4";
-    // flightsCardEl.appendChild(flightDateEl);
+    flightDateEl.textContent = moment(Date.parse(response.Quotes[i].OutboundLeg.DepartureDate)).format("MM/DD/YYYY");
+    // console.log("The unformatted date is " + flightDateEl.textContent);
+    // console.log("The formatted date is " + );
+    // console.log("The formatted date is " + moment(Date.parse(flightDateEl.textContent)).format("MM/DD/YYYY")); //Parse into
+    flightDateEl.className = "col s4";
+    flightDateEl.id = "flight-card-date";
+    flightsCardEl.appendChild(flightDateEl);
     flightAirlineEl.textContent = "Airline: " + translateCarrierId(response.Quotes[i].OutboundLeg.CarrierIds[0], response.Carriers);
     flightAirlineEl.className = "col s12";
     flightsCardEl.appendChild(flightAirlineEl);
@@ -160,7 +164,7 @@ var getFlights = function (event) {
   // var passNumInput = document.querySelector("#num-passengers").value;
   // console.log(startCityInput);
   // console.log(endCityInput);
-  // console.log(dateInput);
+  console.log(dateInput);
   // console.log(passNumInput);
   fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + originAirport + "-sky/" + destinationAirport + "-sky/" + dateInput, {
     "method": "GET",
