@@ -23,6 +23,10 @@ h2 {
     /*margin-top: ; */
 }
 
+#flight-card-date {
+  margin: 29.2px 0px 17.52px;
+}
+
 #display-codes-container div h3, #display-codes-container div p {
   padding-left: 50px;
 }
