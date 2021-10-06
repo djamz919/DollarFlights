@@ -151,9 +151,9 @@ var getCountries = function (response) {
 var getFlights = function (event) {
   event.preventDefault();
   originAirport = document.querySelector("#origin-city").value;
-  originAirport = originAirport.toUpperCase;
+  originAirport = originAirport.toUpperCase();
   destinationAirport = document.querySelector("#destination-city").value;
-  destinationAirport = destinationAirport.toUpperCase;
+  destinationAirport = destinationAirport.toUpperCase();
   var dateInput = document.querySelector("#dates").value;
   // var passNumInput = document.querySelector("#num-passengers").value;
   // console.log(startCityInput);
@@ -198,33 +198,6 @@ var getFlights = function (event) {
   //   });
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems, options);
-});
-=======
-var getExchangeRate = function (event) {
-  event.preventDefault();
-  var rateInput = document.querySelector("#oamount").value;
-  console.log(rateInput);
-fetch("https://fixer-fixer-currency-v1.p.rapidapi.com/convert?from=USD&to=ILS&amount=12", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "fixer-fixer-currency-v1.p.rapidapi.com",
-		"x-rapidapi-key": "957447a831mshed8a5216f1c641fp19235djsnb370d1085dc7"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
-=======
-
 var getExchangeRate = function (originCurrency, destinationCurrency) {
   fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json')
     .then(response => {
@@ -234,19 +207,24 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
       console.error(err);
     })
     .then(response => {
-      console.log(response);
-      startCurrency = originCurrency.toLowerCase;
-      endCurrency = destinationCurrency.toLowerCase;
-      var originCurrencyRate = response.eur.startCurrency.value;
-      var destinationCurrencyRate = response.eur.endCurrency.value;
+      // console.log(response);
+      startCurrency = originCurrency.toLowerCase();
+      endCurrency = destinationCurrency.toLowerCase();
+      console.log(startCurrency);
+      console.log(endCurrency);
+      // console.log(response.eur);
+      console.log(response.eur.usd);
+      var eurObj = response.eur;
+      // console.log(eurObj);
+      // console.log(eurObj[startCurrency]);
+      var originCurrencyRate = eurObj[startCurrency];
+      var destinationCurrencyRate = eurObj[endCurrency];
       exchangeRate = destinationCurrencyRate/originCurrencyRate;
       console.log(originCurrencyRate);
       console.log(destinationCurrencyRate);
       console.log(exchangeRate);
     });
->>>>>>> 1d402acf1b3efb6a80137d78da51554044a90aef
-}
->>>>>>> 3b452f832bf99d26fbe172dc90514fd0632a8c7c
+  }
 
 // var getExchangeRate = function (event) {
 //   event.preventDefault();
