@@ -4,14 +4,26 @@
   padding: 0;
 }
 
-.row {
-  margin: 0;
+#main-container {
+  margin: auto;
 }
 
-#codes-form, #quotes-form, #rates-form {
-  padding-bottom: 150px;
+#search-codes-container, #search-flights-container, #rate-exchange-container {
+  margin: 0;
+  height: 400px;
+}
+
+#codes-form, #quotes-form, #rates-form, #display-codes-container, #display-flights-container, #rate-exchange-display-container{
   height: 100%;
 }
+
+#display-codes-container, #display-flights-container, #rate-exchange-display-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
 
 #codes-form, #quotes-form {
   border-bottom: solid black 1px;
@@ -35,12 +47,28 @@ h2 {
   padding: 0;
 }
 
-#display-codes-container div, #display-flights-container div, #rate-exchange-display-container div {
+/* #display-codes-container div, #display-flights-container div, #rate-exchange-display-container div {
   padding-bottom: 20px;
-}
+} */
 
 #display-flights-container div h3, #display-flights-container div p {
   padding-left: 50px;
+}
+
+#display-codes-container div, #rate-exchange-display-container div {
+  height: 95%;
+  width: 95%;
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+}
+
+#display-flights-container div {
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+  width: 95%;
+  height: 45%;
 }
 
 #rate-exchange-display-container div h3 {
@@ -58,9 +86,9 @@ body {
     flex-direction: column;
   }
   
-  main {
+  /* main {
     flex: 1 0 auto;
-  }
+  } */
   
   
   /* .page-footer{

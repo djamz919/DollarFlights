@@ -210,7 +210,7 @@ var displayExchangeRate = function (originCurrency, destinationCurrency, exchang
   var ratesCardEl = document.createElement('div');
   ratesCardEl.className = "col s12 light-blue accent-4";
   var rateContent = document.createElement('h3');
-  rateContent.textContent = currencyValue + " " + originCurrency + " = " + (currencyValue*exchangeRate).toFixed(2) + " " + destinationCurrency;
+  rateContent.textContent = currencyValue.toFixed(2) + " " + originCurrency + " = " + (currencyValue*exchangeRate).toFixed(2) + " " + destinationCurrency;
   ratesCardEl.appendChild(rateContent);
   displayRateContEl.appendChild(ratesCardEl);
 }
