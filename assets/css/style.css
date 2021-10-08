@@ -8,9 +8,20 @@
   margin: auto;
 }
 
-#search-codes-container, #search-flights-container, #rate-exchange-container {
+#search-codes-container {
   margin: 0;
   height: 400px;
+}
+
+#rate-exchange-container {
+  margin: 0;
+  height: 350px;
+}
+
+
+#search-flights-container {
+  margin: 0;
+  height: 500px;
 }
 
 #codes-form, #quotes-form, #rates-form, #display-codes-container, #display-flights-container, #rate-exchange-display-container{
