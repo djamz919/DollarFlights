@@ -108,11 +108,30 @@ body {
      bottom: 0;
      width: 100%;
 
-
+ 
   } */
 
 
-
+  @media screen and (max-width: 575px){
+    #codes-form{
+      width: 50%;
+    }
+    #display-codes-container{
+      width: 50%;
+    }
+    #rates-form{
+      width: 50%;
+    }
+    #quotes-form{
+      width: 40%;
+    }
+    #display-flights-container{
+      width: 60%;
+    }
+    #rate-exchange-display-container{
+      width: 50%;
+    }
+  }
 
 
 
