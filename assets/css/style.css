@@ -23,8 +23,33 @@
   height: 600px;
 }
 
+#searchFlights div div {
+  margin-bottom: 15px;
+}
+
+#search-history {
+  padding-top: 15px;
+  border-top: dashed gray 1px;
+}
+
+#search-history button {
+  width: 50%;
+}
+
+#clear-history-button {
+  margin-top: 15px;
+}
+
 #codes-form, #quotes-form, #rates-form, #display-codes-container, #display-flights-container, #rate-exchange-display-container{
   height: 100%;
+}
+
+#codes-form, #quotes-form, #rates-form {
+  width: 25%
+}
+
+#display-codes-container, #display-flights-container, #rate-exchange-display-container {
+  width: 75%;
 }
 
 #display-codes-container, #display-flights-container, #rate-exchange-display-container{
@@ -45,8 +70,34 @@ h2 {
     /*margin-top: ; */
 }
 
+#display-codes-container div p, #display-flights-container div p {
+  padding: 10px 0 0 50px;
+  font-size: 20px;
+}
+
+#display-codes-container div h3 {
+  padding: 29.2px 11.25px 17.52px 50px;
+  margin: 0;
+  border-radius: 15px 15px 0 0;
+}
+
+#flight-header {
+  padding: 29.2px 11.25px 17.52px 50px;
+  margin: 0;
+  border-radius: 15px 0 0 0;
+}
+
+#no-flight-header {
+  padding: 29.2px 11.25px 17.52px 50px;
+  margin: 0;
+  border-radius: 15px 15px 0 0;
+}
+
 #flight-card-date {
-  margin: 29.2px 0px 17.52px;
+  text-align: right;
+  padding: 29.2px 50px 17.52px 0;
+  margin: 0;
+  border-radius: 0 15px 0 0;
 }
 
 #display-codes-container div h3, #display-codes-container div p {
@@ -65,8 +116,16 @@ h2 {
   padding-left: 50px;
 }
 
-#display-codes-container div, #rate-exchange-display-container div {
+#display-codes-container div {
   height: 95%;
+  width: 95%;
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+}
+
+#rate-exchange-display-container div {
+  height: 50%;
   width: 95%;
   border-radius: 15px;
   margin-left: 0;
