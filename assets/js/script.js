@@ -150,14 +150,14 @@ var displayFlights = function (response) {
     // console.log("The unformatted date is " + flightDateEl.textContent);
     // console.log("The formatted date is " + );
     // console.log("The formatted date is " + moment(Date.parse(flightDateEl.textContent)).format("MM/DD/YYYY")); //Parse into
-    flightDateEl.className = "col s4";
+    flightDateEl.className = "col s12 white-text light-blue darken-4";
     flightDateEl.id = "flight-card-date";
     flightsCardEl.appendChild(flightDateEl);
     flightAirlineEl.textContent = "Airline: " + translateCarrierId(response.Quotes[i].OutboundLeg.CarrierIds[0], response.Carriers);
-    flightAirlineEl.className = "col s12";
+    flightAirlineEl.className = "col s12 white-text";
     flightsCardEl.appendChild(flightAirlineEl);
     flightCostEl.textContent = "Price: $" + response.Quotes[i].MinPrice;
-    flightCostEl.className = "col s12";
+    flightCostEl.className = "col s12 white-text";
     flightsCardEl.appendChild(flightCostEl);
     displayFlightsContainerEl.appendChild(flightsCardEl);
     // console.log("displayFlights Info: " + JSON.stringify(searchHistoryArr));
@@ -183,6 +183,7 @@ var getCurrencies = function () {
         originCurrency = Object.keys(currencyObj)[0]; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
       }
     //   console.log('The origin currency is ' + originCurrency);
+    return fetch("https://restcountries.com/v3.1/name/" + flightObj.destinationCountry);
     })
     .then(response => {
       return response.json();
@@ -239,16 +240,20 @@ var apiCalls = function (addHistory) {
     })
     .then(response => { //PENDING LOGIC IF NO FLIGHTS ARE AVAILABLE
       // console.log(response);
-      displayFlights(response);
-      getCountries(response);
-      // flightObj.originCountry = response.Places[0].CountryName;
-      // flightObj.destinationCountry = response.Places[1].CountryName;
-      // console.log(flightObj.originCountry);
-      // console.log(flightObj.destinationCountry);
-      // console.log("apiCalls Info: " + JSON.stringify(searchHistoryArr));
-      // console.log("apiCalls Info: " + JSON.stringify(flightObj));
-      if (addHistory) {
-        addToHistory();
+      if (response.Quotes.length === 0){
+        displayEmptyFlights();
+      } else {
+        displayFlights(response);
+        getCountries(response);
+        // flightObj.originCountry = response.Places[0].CountryName;
+        // flightObj.destinationCountry = response.Places[1].CountryName;
+        // console.log(flightObj.originCountry);
+        // console.log(flightObj.destinationCountry);
+        // console.log("apiCalls Info: " + JSON.stringify(searchHistoryArr));
+        // console.log("apiCalls Info: " + JSON.stringify(flightObj));
+        if (addHistory) {
+          addToHistory();
+        }
       }
     })
 }
@@ -390,6 +395,7 @@ var addToHistory = function () {
     var flightButtonEl = document.createElement('button');
     flightButtonEl.id = 'flightHistoryButton' + flightsIndex;
     flightButtonEl.textContent = flightObj.originAirport + " to " + flightObj.destinationAirport + " - " + moment(flightObj.flightDate).format('l');
+    flightButtonEl.className = "waves-effect waves-light btn-small light-blue accent-4 col"
     searchHistoryEl.appendChild(flightButtonEl);
 
     var flightHistoryButtonEl = document.querySelector('#flightHistoryButton' + flightsIndex);
@@ -399,10 +405,18 @@ var addToHistory = function () {
 
   localStorage.setItem("flightsHistory", JSON.stringify(searchHistoryArr));
 
-  // var savedFlights = localStorage.getItem("flightsHistory");
-  // if (savedFlights) {
-  //   console.log("saved flights are" + savedFlights);
-  // }
+  searchHistoryButtonEl = document.getElementById('search-history-button');
+  searchHistoryButtonEl.innerHTML = "";
+  var savedFlights = localStorage.getItem("flightsHistory");
+  if (savedFlights && savedFlights != [] && searchHistoryArr.innerHTML === undefined) {
+    // console.log("empty search history array: " + searchHistoryArr.innerHTML);
+    var clearHistoryButtonEl = document.createElement('button');
+    clearHistoryButtonEl.className = "waves-effect waves-light btn-large light-blue accent-4"
+    clearHistoryButtonEl.id = "clear-history-button";
+    clearHistoryButtonEl.textContent = "Clear History";
+    searchHistoryButtonEl.appendChild(clearHistoryButtonEl);
+    searchHistoryButtonEl.addEventListener("click", clearHistory)
+  }
 }
 
 var redisplayFlights = function (event) {
