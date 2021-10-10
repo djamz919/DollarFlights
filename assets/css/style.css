@@ -1,7 +1,89 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#main-container {
+  margin: auto;
+}
+
+#search-codes-container {
+  margin: 0;
+  height: 400px;
+}
+
+#rate-exchange-container {
+  margin: 0;
+  height: 350px;
+}
+
+
+#search-flights-container {
+  margin: 0;
+  height: 500px;
+}
+
+#codes-form, #quotes-form, #rates-form, #display-codes-container, #display-flights-container, #rate-exchange-display-container{
+  height: 100%;
+}
+
+#display-codes-container, #display-flights-container, #rate-exchange-display-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+#codes-form, #quotes-form {
+  border-bottom: solid black 1px;
+}
+
 h2 {
     font-size: 28px;
     font-weight: 500;
     /*margin-top: ; */
+}
+
+#flight-card-date {
+  margin: 29.2px 0px 17.52px;
+}
+
+#display-codes-container div h3, #display-codes-container div p {
+  padding-left: 50px;
+}
+
+#display-codes-container, #display-flights-container, #rate-exchange-display-container {
+  padding: 0;
+}
+
+/* #display-codes-container div, #display-flights-container div, #rate-exchange-display-container div {
+  padding-bottom: 20px;
+} */
+
+#display-flights-container div h3, #display-flights-container div p {
+  padding-left: 50px;
+}
+
+#display-codes-container div, #rate-exchange-display-container div {
+  height: 95%;
+  width: 95%;
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+}
+
+#display-flights-container div {
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+  width: 95%;
+  height: 45%;
+}
+
+#rate-exchange-display-container div h3 {
+  text-align: center;
 }
 
 h3 {
@@ -15,9 +97,9 @@ body {
     flex-direction: column;
   }
   
-  main {
+  /* main {
     flex: 1 0 auto;
-  }
+  } */
   
   
   /* .page-footer{
