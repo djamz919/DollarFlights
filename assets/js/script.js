@@ -12,6 +12,8 @@ var flightObj = {
   destinationAirport: "",
   originCountry: "",
   destinationCountry: "",
+  originCity: "",
+  destinationCity: "",
   flightDate: ""
 };
 
@@ -37,6 +39,7 @@ var displayCodes = function (response) {
   codescontainerEl.className = "col s12 light-blue accent-4";
   var codesHeader = document.createElement('h3');
   codesHeader.textContent = 'Results for "' + document.querySelector("#city-to-translate").value + '"';
+  codesHeader.className = "col s12 white-text light-blue darken-4";
   codescontainerEl.appendChild(codesHeader);
   for (var i = 0; i < response.Places.length; i++) {
     // console.log(response.Places[i]);
@@ -44,6 +47,7 @@ var displayCodes = function (response) {
     //console.log(codeArr);
     var airportCodes = document.createElement("p");
     airportCodes.textContent = codeArr[0] + ": " + response.Places[i].PlaceName;
+    airportCodes.className = "col s6 white-text";
     codescontainerEl.appendChild(airportCodes);
   }
   codesDivEl.appendChild(codescontainerEl);
@@ -98,6 +102,29 @@ var translateCarrierId = function (id, carrierIds) {
   }
 }
 
+var displayEmptyFlights = function () {
+  //   console.log("I'm in the displayEmptyFlights function");
+    var displayFlightsContainerEl = document.getElementById("display-flights-container");
+    displayFlightsContainerEl.innerHTML = "";
+    var displayRateContEl = document.querySelector("#rate-exchange-display-container");
+    displayRateContEl.innerHTML = "";
+    var flightsCardEl = document.createElement('div');
+    flightsCardEl.className = "col s12 light-blue accent-4";
+    var flightHeaderEl = document.createElement('h3');
+    var flightContentEl = document.createElement('p');
+    // console.log(response.Quotes[i].OutboundLeg.OriginId);
+    // console.log(response.Places);
+    flightHeaderEl.textContent = "Uh-oh! That Search Yielded No Results!"
+    // console.log(flightHeaderEl.textContent);
+    flightHeaderEl.className = "col s12 white-text light-blue darken-4";
+    flightHeaderEl.id = "no-flight-header";
+    flightsCardEl.appendChild(flightHeaderEl);
+    flightContentEl.textContent = "Try Another Search Instead";
+    flightContentEl.className = "col s12 white-text";
+    flightsCardEl.appendChild(flightContentEl);
+    displayFlightsContainerEl.appendChild(flightsCardEl);
+  }
+
 var displayFlights = function (response) {
   // Origin Airport to Destination Airport; Airline and Flight ID; Time of Departure; Cost
   var displayFlightsContainerEl = document.getElementById("display-flights-container");
@@ -109,13 +136,14 @@ var displayFlights = function (response) {
     flightsCardEl.id = "flights" + i;
     var flightHeaderEl = document.createElement('h3');
     var flightAirlineEl = document.createElement('p');
-    var flightDateEl = document.createElement('p');
+    var flightDateEl = document.createElement('h3');
     var flightCostEl = document.createElement('p');
     // console.log(response.Quotes[i].OutboundLeg.OriginId);
     // console.log(response.Places);
     flightHeaderEl.textContent = translatePlaceId(response.Quotes[i].OutboundLeg.OriginId, response.Places) + " to " + translatePlaceId(response.Quotes[i].OutboundLeg.DestinationId, response.Places)
     // console.log(flightHeaderEl.textContent);
-    flightHeaderEl.className = "col s8";
+    flightHeaderEl.className = "col s10 white-text light-blue darken-4";
+    flightHeaderEl.id = "flight-header";
     flightsCardEl.appendChild(flightHeaderEl);
     flightObj.flightDate = moment(Date.parse(response.Quotes[i].OutboundLeg.DepartureDate)).format("YYYY-MM-DD");
     flightDateEl.textContent = moment(Date.parse(response.Quotes[i].OutboundLeg.DepartureDate)).format('l');
@@ -144,20 +172,36 @@ var getCurrencies = function () {
     })
     .then(response => {
       // console.log(response);
-      var currencyObj = response[0].currencies;
-      originCurrency = Object.keys(currencyObj)[0]; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
-      // console.log('The origin currency is ' + originCurrency);
-      return fetch("https://restcountries.com/v3.1/name/" + flightObj.destinationCountry)
+      if (flightObj.originCity === "Hong Kong") {
+        originCurrency = "HKD";
+      } else if (flightObj.originCity === "Macau") {
+        originCurrency = "MOP";
+      } else if (flightObj.originCountry === "China") {
+        originCurrency = "CNY";
+      } else {
+        var currencyObj = response[0].currencies;
+        originCurrency = Object.keys(currencyObj)[0]; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
+      }
+    //   console.log('The origin currency is ' + originCurrency);
     })
     .then(response => {
       return response.json();
     })
     .then(response => {
       // console.log(response);
-      var currencyObj = response[0].currencies; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
-      destinationCurrency = Object.keys(currencyObj)[0];
-      // console.log('The destination currency is ' + destinationCurrency);
-      getExchangeRate(originCurrency, destinationCurrency);
+      if (flightObj.destinationCity === "Hong Kong") {
+        destinationCurrency = "HKD";
+      } else if (flightObj.destinationCity === "Macau") {
+        destinationCurrency = "MOP";
+      } else if (flightObj.destinationCountry === "China") {
+        destinationCurrency = "CNY";
+      } else {
+        var currencyObj = response[0].currencies;
+        destinationCurrency = Object.keys(currencyObj)[0]; //INCLUDE ADDITIONAL LOGIC FOR CHINA WHICH AS MULTIPLE CURRENCIES
+      }
+    //   console.log('The destination currency is ' + destinationCurrency);
+      getExchangeRate(originCurrency, destinationCurrency, true);
+    //   console.log(flightObj)
     })
 }
 
@@ -168,8 +212,10 @@ var getCountries = function (response) {
     // console.log(flightObj.destinationCountry);
     if (response.Places[i].SkyscannerCode == flightObj.originAirport) {
       flightObj.originCountry = response.Places[i].CountryName;
+      flightObj.originCity = response.Places[i].CityName;
     } else if (response.Places[i].SkyscannerCode == flightObj.destinationAirport) {
       flightObj.destinationCountry = response.Places[i].CountryName;
+      flightObj.destinationCity = response.Places[i].CityName;
     }
   }
   // console.log('The origin country is ' + flightObj.originCountry);
@@ -234,18 +280,47 @@ var getFlights = function (event) {
   //   });
 }
 
-var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate) {
+var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate, flightSearch) {
   displayRateContEl = document.querySelector("#rate-exchange-display-container");
   displayRateContEl.innerHTML = "";
   var ratesCardEl = document.createElement('div');
   ratesCardEl.className = "col s12 light-blue accent-4";
-  var rateContent = document.createElement('h3');
-  rateContent.textContent = currencyValue.toFixed(2) + " " + originCurrency + " = " + (currencyValue * exchangeRate).toFixed(2) + " " + destinationCurrency;
+  var rateHeader = document.createElement('h3');
+  var rateContent = document.createElement('p');
+  if (flightSearch) {
+    if (flightObj.originCountry === flightObj.destinationCountry && flightObj.originCountry === "China" && (flightObj.originCity === "Hong Kong" || flightObj.destinationCity === "Hong Kong" || flightObj.originCity === "Macau" || flightObj.destinationCity === "Macau")) {
+      rateHeader.textContent = "This flight will travel from " + flightObj.originCity + " to " + flightObj.destinationCity;
+    } else if (flightObj.originCountry === flightObj.destinationCountry && (flightObj.originCity != "Hong Kong" || flightObj.destinationCity != "Hong Kong" || flightObj.originCity != "Macau" || flightObj.destinationCity != "Macau")) {
+      rateHeader.textContent = "This flight will travel domestically in " + flightObj.originCountry;
+    } else if (flightObj.originCountry != flightObj.destinationCountry && (flightObj.originCity === "Hong Kong" || flightObj.destinationCity === "Hong Kong" || flightObj.originCity === "Macau" || flightObj.destinationCity === "Macau")) {
+      if ((flightObj.originCity === "Hong Kong" || flightObj.originCity === "Macau") && (flightObj.destinationCity === "Hong Kong" || flightObj.destinationCity === "Macau")) {
+        rateHeader.textContent = "This flight will travel from " + flightObj.originCity + " to " + flightObj.destinationCity;
+      } else if ((flightObj.originCity === "Hong Kong" || flightObj.originCity === "Macau") && (flightObj.destinationCity != "Hong Kong" || flightObj.destinationCity != "Macau")) {
+        rateHeader.textContent = "This flight will travel from " + flightObj.originCity + " to " + flightObj.destinationCountry;
+      } else if ((flightObj.originCity != "Hong Kong" || flightObj.originCity != "Macau") && (flightObj.destinationCity === "Hong Kong" || flightObj.destinationCity === "Macau")) {
+        rateHeader.textContent = "This flight will travel from " + flightObj.originCountry + " to " + flightObj.destinationCity;
+      }
+    } else {
+      rateHeader.textContent = "This flight will travel from " + flightObj.originCountry + " to " + flightObj.destinationCountry;
+    }
+  } else {
+    rateHeader.textContent = "According to the Current Exchange Rate";
+  }
+  console.log(originCurrency);
+  console.log(destinationCurrency);
+  if (originCurrency === destinationCurrency){
+    rateContent.textContent = "No currency exchange required!"
+  } else {
+    rateContent.textContent = (Number(currencyValue)).toFixed(2) + " " + originCurrency + " = " + ((Number(currencyValue)) * (Number(exchangeRate))).toFixed(2) + " " + destinationCurrency;
+  }
+  rateHeader.className = "col s12 white-text light-blue darken-4";
+  ratesCardEl.appendChild(rateHeader);
+  rateContent.className = "col s12 white-text";
   ratesCardEl.appendChild(rateContent);
   displayRateContEl.appendChild(ratesCardEl);
 }
 
-var getExchangeRate = function (originCurrency, destinationCurrency) {
+var getExchangeRate = function (originCurrency, destinationCurrency, flightSearch) {
   fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json')
     .then(response => {
       return response.json();
@@ -270,7 +345,7 @@ var getExchangeRate = function (originCurrency, destinationCurrency) {
       // console.log(originCurrencyRate);
       // console.log(destinationCurrencyRate);
       // console.log(exchangeRate);
-      displayExchangeRate(originCurrency, destinationCurrency, exchangeRate);
+      displayExchangeRate(originCurrency, destinationCurrency, exchangeRate, flightSearch);
     });
 }
 
@@ -283,7 +358,15 @@ var startExchange = function (event) {
   }
   // console.log(startCurrency);
   // console.log(endCurrency);
-  getExchangeRate(startCurrency, endCurrency);
+  getExchangeRate(startCurrency, endCurrency, false); //false means this was not from a flight search
+}
+var clearHistory = function () {
+  searchHistoryArr = [];
+  var searchHistoryEl = document.getElementById('search-history');
+  searchHistoryEl.innerHTML = "";
+  var searchHistoryButtonEl = document.getElementById('search-history-button');
+  searchHistoryButtonEl.innerHTML = "";
+  localStorage.setItem("flightsHistory", JSON.stringify(searchHistoryArr));
 }
 
 var addToHistory = function () {

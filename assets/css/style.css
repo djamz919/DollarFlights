@@ -15,13 +15,12 @@
 
 #rate-exchange-container {
   margin: 0;
-  height: 350px;
+  height: 400px;
 }
-
 
 #search-flights-container {
   margin: 0;
-  height: 500px;
+  height: 600px;
 }
 
 #codes-form, #quotes-form, #rates-form, #display-codes-container, #display-flights-container, #rate-exchange-display-container{
