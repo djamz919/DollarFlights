@@ -20,7 +20,7 @@
 
 #search-flights-container {
   margin: 0;
-  height: 600px;
+  height: 800px;
 }
 
 #searchFlights div div {
@@ -33,7 +33,7 @@
 }
 
 #search-history button {
-  width: 50%;
+  width: 100%;
 }
 
 #clear-history-button {
@@ -59,7 +59,7 @@
   justify-content: space-around;
 }
 
-#codes-form, #quotes-form {
+#codes-form, #quotes-form, #display-codes-container, #display-flights-container {
   border-bottom: solid black 1px;
 }
 
@@ -77,13 +77,15 @@ h2 {
 #display-codes-container div h3 {
   padding: 29.2px 11.25px 17.52px 50px;
   margin: 0;
-  border-radius: 15px 15px 0 0 ;
+  border-radius: 15px 15px 0 0;
+  font-size: 24px;
 }
 
 #flight-header {
   padding: 29.2px 11.25px 17.52px 50px;
   margin: 0;
-  border-radius: 15px 0 0 0 ;
+  border-radius: 15px 0 0 0;
+  font-size: 24px;
 }
 
 #no-flight-header {
@@ -97,6 +99,7 @@ h2 {
   padding: 29.2px 50px 17.52px 0;
   margin: 0;
   border-radius: 0 15px 0 0;
+  font-size: 24px;
 }
 
 #display-codes-container, #display-flights-container, #rate-exchange-display-container {
@@ -144,6 +147,8 @@ h2 {
   padding: 29.2px 0 17.52px 0;
   margin: 0;
   border-radius: 15px 15px 0 0;
+  font-size: 24px;
+  font-weight: 500;
 }
 
 #rate-exchange-display-container div p {
@@ -152,40 +157,128 @@ h2 {
   font-size: 20px;
 }
 
-h3 {
-    font-size: 24px;
-    font-weight: 500;
-}
-
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
   
-  /* main {
-    flex: 1 0 auto;
-  } */
+/* main {
+  flex: 1 0 auto;
+} */
   
   
-  /* .page-footer{
-     position: fixed;
-     left: 0;
-     bottom: 0;
-     width: 100%;
+/* .page-footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%; 
+} */
 
- 
-  } */
+@media screen and (max-width: 1240px) {
 
-  @media screen and (max-width: 1240px) {
-
-    #search-flights-container {
-      margin: 0;
-      height: 900px;
-    }
-
-    #search-history button {
-      width: 100%;
-    }
+  #search-flights-container {
+    margin: 0;
+    height: 900px;
   }
 
+  #search-history button {
+    width: 100%;
+  }
+
+  #flight-header, #display-codes-container div h3, #flight-card-date, #rate-exchane-display-container div h3, #rate-exchange-display-container div h3 {
+    font-size: 20px;
+  }
+
+  #display-flights-container div {
+    height: 20%;
+  }
+
+  #flight-header, #display-codes-container div h3 {
+    padding-left: 30px;
+  }
+  
+  #display-codes-container div p, #display-flights-container div p {
+    padding-left: 30px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  #codes-form, #quotes-form, #rates-form {
+    width: 100%;
+  }
+  
+  #display-codes-container, #display-flights-container, #rate-exchange-display-container {
+    width: 100%;
+  }
+
+  #codes-form {
+    height: 230px;
+    border-bottom: none;
+  }
+
+  #quotes-form {
+    height: 600px;
+    border-bottom: none;
+  }
+
+  #display-codes-container, #display-flights-container{
+    border-bottom: none;
+  }
+
+  #display-flights-container {
+    height: 500px;
+  }
+
+  #search-history button {
+    width: 33%;
+  }
+
+  #rates-form {
+    height: 360px;
+  }
+
+  #display-flights-container div {
+    height: 35%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #display-codes-container div p, #display-flights-container div p, #rate-exchange-display-container div p {
+    font-size: 16px;
+  }
+
+  #search-history button {
+    width: 100%;
+  }
+
+  #flight-header, #display-codes-container div h3, #flight-card-date, #rate-exchane-display-container div h3, #rate-exchange-display-container div h3 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .nav-wrapper {
+    height: 100px;
+  }
+
+  #flight-header, #display-codes-container div h3, #display-codes-container div p, #display-flights-container div p {
+    padding-left: 10px;
+  } 
+
+  #flight-card-date {
+    padding-right: 10px;
+  }
+
+  nav {
+    height: 80px;
+  }
+
+  .brand-logo {
+    font-size: 26px;
+  }
+}
