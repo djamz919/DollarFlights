@@ -123,6 +123,14 @@ h2 {
   padding: 0;
 }
 
+#rate-exchange-display-container div {
+  height: 50%;
+  width: 95%;
+  border-radius: 15px;
+  margin-left: 0;
+  padding: 0;
+}
+
 #display-flights-container div {
   border-radius: 15px;
   margin-left: 0;
@@ -166,7 +174,7 @@ body {
      bottom: 0;
      width: 100%;
 
-
+ 
   } */
 
   @media screen and (max-width: 1240px) {

@@ -26,7 +26,7 @@ The user must input there specific airport codes to search for fares. If the use
 
     - Currency Exchange - https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json
 
-## Application Screenshots:
+## Application Screenshot:
 
 ![projectone](assets/images/DollarFlightsWebpage.png)
 

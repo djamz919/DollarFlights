@@ -287,8 +287,7 @@ var getFlights = function (event) {
 }
 
 var displayExchangeRate = function (originCurrency, destinationCurrency, exchangeRate, flightSearch) {
-//   console.log(flightObj);
-  var displayRateContEl = document.querySelector("#rate-exchange-display-container");
+  displayRateContEl = document.querySelector("#rate-exchange-display-container");
   displayRateContEl.innerHTML = "";
   var ratesCardEl = document.createElement('div');
   ratesCardEl.className = "col s12 light-blue accent-4";
@@ -419,11 +418,8 @@ var addToHistory = function () {
     clearHistoryButtonEl.id = "clear-history-button";
     clearHistoryButtonEl.textContent = "Clear History";
     searchHistoryButtonEl.appendChild(clearHistoryButtonEl);
-
     searchHistoryButtonEl.addEventListener("click", clearHistory)
   }
-
-
 }
 
 var redisplayFlights = function (event) {
